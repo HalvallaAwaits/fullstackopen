@@ -8,7 +8,7 @@ const Button = props => {
 const Display = props => {
   return (
     <div>
-      {props.type} {props.count}
+      {props.text} {props.value}
     </div>
   );
 };
@@ -17,10 +17,25 @@ const App = props => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const addGoodReview = () => setGood(good + 1);
-  const addNeutralReview = () => setNeutral(neutral + 1);
-  const addBadReview = () => setBad(bad + 1);
+  const addGoodReview = () => {
+    setGood(good + 1);
+    setTotal(total + 1);
+  };
+
+  const addNeutralReview = () => {
+    setNeutral(neutral + 1);
+    setTotal(total + 1);
+  };
+
+  const addBadReview = () => {
+    setBad(bad + 1);
+    setTotal(total + 1);
+  };
+
+  const avg = () => (good - bad) / total;
+  const positive = () => (good / total) * 100 + "%";
 
   return (
     <div>
@@ -29,9 +44,12 @@ const App = props => {
       <Button handleClick={() => addNeutralReview()} text="neutral" />
       <Button handleClick={() => addBadReview()} text="bad" />
       <h2>review stats</h2>
-      <Display type="good" count={good} />
-      <Display type="neutral" count={neutral} />
-      <Display type="bad" count={bad} />
+      <Display text="good" value={good} />
+      <Display text="neutral" value={neutral} />
+      <Display text="bad" value={bad} />
+      <Display text="total" value={total} />
+      <Display text="average" value={avg()} />
+      <Display text="positive" value={positive()} />
     </div>
   );
 };
