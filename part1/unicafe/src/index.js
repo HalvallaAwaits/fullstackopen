@@ -5,14 +5,6 @@ const Button = props => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
-const Statistic = props => {
-  return (
-    <div>
-      {props.text} {props.value}
-    </div>
-  );
-};
-
 const Statistics = props => {
   if (props.data.total === 0) {
     return (
@@ -23,12 +15,32 @@ const Statistics = props => {
   } else {
     return (
       <div>
-        <Statistic text="good" value={props.data.good} />
-        <Statistic text="neutral" value={props.data.neutral} />
-        <Statistic text="bad" value={props.data.bad} />
-        <Statistic text="total" value={props.data.total} />
-        <Statistic text="average" value={props.data.average} />
-        <Statistic text="positive" value={props.data.positive} />
+        <table>
+          <tr>
+            <td>good</td>
+            <td>{props.data.good}</td>
+          </tr>
+          <tr>
+            <td>neutral</td>
+            <td>{props.data.neutral}</td>
+          </tr>
+          <tr>
+            <td>bad</td>
+            <td>{props.data.bad}</td>
+          </tr>
+          <tr>
+            <td>total</td>
+            <td>{props.data.total}</td>
+          </tr>
+          <tr>
+            <td>average</td>
+            <td>{props.data.average}</td>
+          </tr>
+          <tr>
+            <td>positive</td>
+            <td>{props.data.positive}</td>
+          </tr>
+        </table>
       </div>
     );
   }
@@ -55,8 +67,8 @@ const App = props => {
     setTotal(total + 1);
   };
 
-  const avg = () => (good - bad) / total;
-  const positive = () => (good / total) * 100 + "%";
+  const avg = () => ((good - bad) / total).toFixed(2);
+  const positive = () => ((good / total) * 100).toFixed(2) + "%";
 
   const stats = {
     good: good,
@@ -73,7 +85,7 @@ const App = props => {
       <Button handleClick={() => addGoodReview()} text="good" />
       <Button handleClick={() => addNeutralReview()} text="neutral" />
       <Button handleClick={() => addBadReview()} text="bad" />
-      <h2>review stats</h2>
+      <h2>Statistics</h2>
       <Statistics data={stats}></Statistics>
     </div>
   );
