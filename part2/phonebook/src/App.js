@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 
-function App() {
-  return <div className="App"></div>;
-}
+const App = () => {
+  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [newName, setNewName] = useState("some person");
+
+  const rows = () =>
+    persons.map(person => <li key={person.name}>{person.name}</li>);
+
+  const addPerson = event => {
+    event.preventDefault();
+
+    setPersons(persons.concat({ name: newName }));
+    setNewName("");
+  };
+
+  const handlePersonChange = event => {
+    setNewName(event.target.value);
+  };
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      <form onSubmit={addPerson}>
+        <div>
+          name: <input value={newName} onChange={handlePersonChange} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      <ul style={{ listStyle: "none" }}>{rows()}</ul>
+    </div>
+  );
+};
 
 export default App;
